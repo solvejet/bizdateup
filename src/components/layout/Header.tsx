@@ -1,4 +1,3 @@
-// src/components/layout/Header/Header.tsx
 import { useState, useCallback, memo } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
@@ -12,7 +11,7 @@ import { navigation } from './Header/navigation/constants'
 const Logo = memo(() => (
   <Link 
     to="/" 
-    className="flex h-10 items-center gap-2" // Updated height to match other elements
+    className="flex h-10 items-center gap-2"
     aria-label="BizDateup Home"
   >
     <img
@@ -66,25 +65,27 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-900/60">
         <nav
-          className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
+          className="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6 lg:px-8"
           aria-label="Global"
         >
           {/* Left section - Logo */}
-          <div className="flex lg:flex-1">
+          <div className="flex-1">
             <Logo />
           </div>
-          
-          {/* Mobile menu button and theme toggle */}
-          <div className="flex h-10 items-center gap-4 lg:hidden"> {/* Added fixed height */}
-            <ThemeToggle />
-            <HamburgerIcon 
-              isOpen={mobileMenuOpen} 
-              onClick={handleHamburgerClick}
-            />
-          </div>
 
-          {/* Desktop navigation */}
-          <div className="hidden lg:flex lg:gap-x-12">
+          {/* Center section - Mobile menu buttons */}
+          <div className="flex lg:hidden mx-auto">
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <HamburgerIcon 
+                isOpen={mobileMenuOpen} 
+                onClick={handleHamburgerClick}
+              />
+            </div>
+          </div>
+          
+          {/* Right section - Desktop navigation */}
+          <div className="hidden lg:flex-1 lg:flex lg:justify-center lg:gap-x-12">
             {navigation.map((item) => (
               <NavigationItem
                 key={item.name}

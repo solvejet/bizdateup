@@ -12,43 +12,55 @@ export default function HamburgerIcon({ isOpen, onClick }: HamburgerIconProps) {
     ease: [0.4, 0, 0.2, 1]
   }
 
-  const lineStyles = "h-0.5 absolute left-1/2 bg-gray-700 dark:bg-gray-200 transform -translate-x-1/2 origin-center rounded-full"
+  const lineStyles = "h-0.5 absolute bg-gray-700 dark:bg-gray-200 transform origin-center rounded-full"
   
   const variants = {
     top: {
       closed: { 
         width: 20,
         translateY: -6,
-        rotate: 0
+        rotate: 0,
+        left: '50%',
+        x: -10
       },
       open: { 
         width: 24,
         translateY: 0,
-        rotate: 45
+        rotate: 45,
+        left: '50%',
+        x: -12
       }
     },
     middle: {
       closed: {
         width: 16,
         opacity: 1,
-        translateX: -8
+        left: '50%',
+        x: -8,
+        translateY: 0
       },
       open: {
         width: 0,
         opacity: 0,
-        translateX: -12
+        left: '50%',
+        x: 0,
+        translateY: 0
       }
     },
     bottom: {
       closed: { 
         width: 20,
         translateY: 6,
-        rotate: 0
+        rotate: 0,
+        left: '50%',
+        x: -10
       },
       open: { 
         width: 24,
         translateY: 0,
-        rotate: -45
+        rotate: -45,
+        left: '50%',
+        x: -12
       }
     }
   }
@@ -62,25 +74,27 @@ export default function HamburgerIcon({ isOpen, onClick }: HamburgerIconProps) {
       aria-expanded={isOpen}
       aria-label={isOpen ? "Close menu" : "Open menu"}
     >
-      <div className="relative w-6 h-6 flex items-center justify-center">
-        <motion.span
-          className={lineStyles}
-          variants={variants.top}
-          animate={isOpen ? "open" : "closed"}
-          transition={transition}
-        />
-        <motion.span
-          className={lineStyles}
-          variants={variants.middle}
-          animate={isOpen ? "open" : "closed"}
-          transition={transition}
-        />
-        <motion.span
-          className={lineStyles}
-          variants={variants.bottom}
-          animate={isOpen ? "open" : "closed"}
-          transition={transition}
-        />
+      <div className="relative w-6 h-6 flex items-center">
+        <div className="absolute top-1/2 w-full -translate-y-1/2">
+          <motion.span
+            className={lineStyles}
+            variants={variants.top}
+            animate={isOpen ? "open" : "closed"}
+            transition={transition}
+          />
+          <motion.span
+            className={lineStyles}
+            variants={variants.middle}
+            animate={isOpen ? "open" : "closed"}
+            transition={transition}
+          />
+          <motion.span
+            className={lineStyles}
+            variants={variants.bottom}
+            animate={isOpen ? "open" : "closed"}
+            transition={transition}
+          />
+        </div>
       </div>
     </motion.button>
   )
