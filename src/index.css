@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+
+  /* Add Lato font as default */
+  html {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 226 43% 23%;

@@ -1,18 +1,20 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, type PluginOption, type UserConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { VitePWA, type VitePWAOptions } from 'vite-plugin-pwa'
 import { visualizer } from 'rollup-plugin-visualizer'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import type { IncomingMessage, ServerResponse } from 'http'
+import type { Connect } from 'vite'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // Create a plugin to handle placeholder images
-function placeholderPlugin(): Plugin {
+function placeholderPlugin(): PluginOption {
   return {
     name: 'placeholder-plugin',
     configureServer(server) {
-      server.middlewares.use((req, res, next) => {
+      server.middlewares.use((req: IncomingMessage, res: ServerResponse, next: Connect.NextFunction) => {
         if (req.url?.startsWith('/api/placeholder/')) {
           const [width, height] = req.url
             .split('/')
@@ -88,8 +90,6 @@ const pwaConfiguration: Partial<VitePWAOptions> = {
     categories: ['business', 'finance', 'productivity']
   },
   workbox: {
-    // Don't fallback on document based (e.g. `/some-page`) requests
-    // This removes the "All" from the default network-first strategy
     navigationPreload: true,
     runtimeCaching: [
       {
@@ -145,7 +145,7 @@ const pwaConfiguration: Partial<VitePWAOptions> = {
 }
 
 // Vite Configuration
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ command, mode }): UserConfig => {
   // Load env file based on `mode` in the current working directory.
   const env = loadEnv(mode, process.cwd(), '')
 
@@ -153,15 +153,15 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       react(),
       VitePWA(pwaConfiguration),
-      placeholderPlugin(), 
+      placeholderPlugin(),
       visualizer({
         template: 'treemap', // or 'sunburst' | 'network'
         open: true,
         gzipSize: true,
         brotliSize: true,
-        filename: 'analyze.html' // will be saved in project's root
+        filename: 'analyze.html'
       })
-    ],
+    ] as PluginOption[],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src')
