@@ -4,6 +4,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 import { AnimatePresence } from 'framer-motion'
 import { OfflineWrapper } from '@/components/OfflineWrapper'
+import { InstallPrompt } from '@/components/InstallPrompt'
 import { SkipLink } from '@/components/SkipLink'
 import Header from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -53,6 +54,7 @@ export default function App() {
           <Footer />
         </ErrorBoundary>
       </div>
+      <InstallPrompt />
     </OfflineWrapper>
   )
 }

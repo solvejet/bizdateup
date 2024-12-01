@@ -1,3 +1,4 @@
+// src/components/layout/Header.tsx
 import { useState, useCallback, memo } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
@@ -36,7 +37,7 @@ const AuthButtons = memo(() => (
     </Link>
     <Link
       to="/signup"
-      className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90 transition-colors"
+      className="rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white hover:bg-primary/90 transition-colors"
     >
       Sign up
     </Link>
@@ -65,16 +66,16 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-900/60">
         <nav
-          className="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6 lg:px-8"
+          className="mx-auto flex h-16 max-w-7xl items-center lg:px-8"
           aria-label="Global"
         >
           {/* Left section - Logo */}
-          <div className="flex-1">
+          <div className="flex lg:flex-none px-4">
             <Logo />
           </div>
 
           {/* Center section - Mobile menu buttons */}
-          <div className="flex lg:hidden mx-auto">
+          <div className="flex lg:hidden flex-1 justify-end px-4">
             <div className="flex items-center gap-4">
               <ThemeToggle />
               <HamburgerIcon 
@@ -85,7 +86,7 @@ export default function Header() {
           </div>
           
           {/* Right section - Desktop navigation */}
-          <div className="hidden lg:flex-1 lg:flex lg:justify-center lg:gap-x-12">
+          <div className="hidden lg:flex lg:flex-1 lg:justify-center lg:gap-x-8">
             {navigation.map((item) => (
               <NavigationItem
                 key={item.name}
@@ -97,7 +98,7 @@ export default function Header() {
           </div>
 
           {/* Desktop right section */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-6">
+          <div className="hidden lg:flex lg:items-center lg:gap-x-6 lg:px-4">
             <ThemeToggle />
             <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
             <AuthButtons />
