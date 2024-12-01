@@ -1,2 +1,6 @@
 // src/lib/types.ts
-export type ClassValue = string | number | boolean | undefined | null | Record<string, boolean> | ClassValue[]
+import { type ClassNameValue, twMerge as tailwindMerge } from 'tailwind-merge'
+
+export function cn(...inputs: ClassNameValue[]) {
+  return tailwindMerge(...inputs)
+}

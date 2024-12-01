@@ -71,6 +71,7 @@ export function MobileMenu({ items, isOpen, onClose }: MobileMenuProps) {
     <>
       {/* Backdrop - only handles visual effect */}
       <motion.div
+        onClick={onClose}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

@@ -68,21 +68,25 @@ export const MegaMenu = memo(function MegaMenu({
       'a[href], button, [tabindex]:not([tabindex="-1"])'
     )
     const firstElement = focusableElements[0]
-    const lastElement = focusableElements[focusableElements.length - 1]
 
     const handleTab = (e: KeyboardEvent) => {
       if (e.key !== 'Tab') return
-
-      if (e.shiftKey) {
-        if (document.activeElement === firstElement) {
-          e.preventDefault()
-          lastElement.focus()
-        }
-      } else {
-        if (document.activeElement === lastElement) {
-          e.preventDefault()
-          firstElement.focus()
-        }
+    
+      const focusableElements = Array.from(menuRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button, [tabindex]:not([tabindex="-1"])'
+      ) || [])
+      
+      if (focusableElements.length === 0) return
+      
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+    
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault()
+        lastElement?.focus()
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault()
+        firstElement?.focus()
       }
     }
 
