@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 226 43% 23%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 226 43% 23%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 226 43% 23%;
+
+    --primary: 226 43% 23%;
+    /* #242552 */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 226 43% 38%;
+    /* #4C4F7F - lighter navy */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 226 43% 95%;
+    --muted-foreground: 226 33% 40%;
+
+    --accent: 226 43% 95%;
+    --accent-foreground: 226 43% 23%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 226 43% 90%;
+    --input: 226 43% 90%;
+    --ring: 226 43% 23%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 226 43% 15%;
+    --foreground: 210 40% 98%;
+
+    --card: 226 43% 15%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 226 43% 15%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 226 43% 23%;
+    /* Keep navy as primary in dark mode */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 226 43% 38%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 226 43% 20%;
+    --muted-foreground: 226 33% 70%;
+
+    --accent: 226 43% 20%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 226 43% 25%;
+    --input: 226 43% 25%;
+    --ring: 226 43% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-slate-200 dark:border-slate-800;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
