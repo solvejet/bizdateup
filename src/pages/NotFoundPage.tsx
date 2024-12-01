@@ -8,8 +8,9 @@ export default function NotFoundPage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Log 404 errors to your analytics service
-    console.error('404 Error: Page not found')
+    if (process.env.NODE_ENV === 'development') {
+      console.error('404 Error: Page not found')
+    }
   }, [])
 
   return (

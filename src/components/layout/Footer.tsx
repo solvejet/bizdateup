@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { NewsletterForm } from './Footer/NewsletterForm'
 import { SocialLinks } from './Footer/SocialLinks'
 import { ContactInfo } from './Footer/ContactInfo'
+import { OptimizedImage } from '@/components/common/OptimizedImage'
 import { footerNavigation } from './Footer/navigation/constants'
 import { cn } from '@/lib/utils'
 
@@ -43,11 +44,13 @@ const FooterTop = memo(() => (
   <div className="xl:grid xl:grid-cols-3 xl:gap-8">
     <div className="space-y-8">
       <Link to="/">
-        <img
-          className="h-12 w-auto"
-          src="/logo.svg"
-          alt="BizDateup"
-        />
+          <OptimizedImage
+            src="/logo.svg"
+            alt="BizDateup"
+            width={48}
+            height={48}
+            className="h-12 w-auto"
+          />
       </Link>
       <motion.p 
         initial={{ opacity: 0, y: 20 }}
