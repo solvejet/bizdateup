@@ -1,5 +1,6 @@
 // src/lib/utils.ts
-import { type ClassValue, twMerge } from "tailwind-merge"
+import type { ClassValue } from './types'
+import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(inputs)

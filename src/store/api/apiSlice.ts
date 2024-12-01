@@ -1,12 +1,31 @@
 // src/store/api/apiSlice.ts
-import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
+import { 
+  createApi, 
+  fetchBaseQuery, 
+  FetchBaseQueryError,
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError as RTKError
+} from '@reduxjs/toolkit/query/react'
 import { toast } from 'sonner'
 
+interface ApiConfig {
+  baseUrl: string
+}
+
+const config: ApiConfig = {
+  baseUrl: process.env.VITE_API_URL || 'http://localhost:3000/api'
+}
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api',
+  baseUrl: config.baseUrl,
 })
 
-const baseQueryWithErrorHandling = async (args: any, api: any, extraOptions: any) => {
+const baseQueryWithErrorHandling: BaseQueryFn<
+  FetchArgs,
+  unknown,
+  RTKError
+> = async (args, api, extraOptions) => {
   try {
     const result = await baseQuery(args, api, extraOptions)
     
@@ -35,7 +54,7 @@ const baseQueryWithErrorHandling = async (args: any, api: any, extraOptions: any
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithErrorHandling,
-  endpoints: (builder) => ({
+  endpoints: () => ({
     // Add your endpoints here
   }),
 })

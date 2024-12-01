@@ -19,12 +19,12 @@ export function useFocusTrap(isActive: boolean) {
     const handleTabKey = (e: KeyboardEvent) => {
       if (e.key !== 'Tab') return
 
-      if (e.shiftKey) {
+      if (e.shiftKey && firstElement && lastElement) {
         if (document.activeElement === firstElement) {
           e.preventDefault()
           lastElement.focus()
         }
-      } else {
+      } else if (firstElement && lastElement) {
         if (document.activeElement === lastElement) {
           e.preventDefault()
           firstElement.focus()
@@ -33,7 +33,7 @@ export function useFocusTrap(isActive: boolean) {
     }
 
     document.addEventListener('keydown', handleTabKey)
-    firstElement.focus()
+    firstElement?.focus()
 
     return () => {
       document.removeEventListener('keydown', handleTabKey)
