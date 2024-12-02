@@ -2,6 +2,7 @@
 import { memo, useRef, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { ResponsiveContainer } from '../ResponsiveContainer'
 import { useEventListener } from '@/hooks/useEventListener'
 import type { NavItem, SubNavItem } from '@/types'
 
@@ -163,6 +164,7 @@ export const MegaMenu = memo(function MegaMenu({
       aria-orientation="horizontal"
       aria-labelledby={`${activeMenu?.toLowerCase()}-button`}
     >
+      <ResponsiveContainer>
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 py-8 px-4 sm:grid-cols-2 lg:grid-cols-3">
           {activeItems.map((item) => (
@@ -178,6 +180,7 @@ export const MegaMenu = memo(function MegaMenu({
         className="absolute inset-0 -z-10 opacity-50 shadow-lg pointer-events-none"
         aria-hidden="true"
       />
+      </ResponsiveContainer>
     </motion.div>
   )
 })

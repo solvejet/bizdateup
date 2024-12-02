@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { WifiOff, RefreshCcw } from 'lucide-react'
+import { ResponsiveContainer } from '../components/layout/ResponsiveContainer'
 
 export default function OfflinePage() {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
@@ -24,6 +25,7 @@ export default function OfflinePage() {
   }
 
   return (
+    <ResponsiveContainer>
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <div className="text-center">
         <WifiOff className="mx-auto h-12 w-12 text-gray-400" />
@@ -52,5 +54,6 @@ export default function OfflinePage() {
         </div>
       </div>
     </div>
+    </ResponsiveContainer>
   )
 }

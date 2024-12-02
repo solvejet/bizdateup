@@ -1,30 +1,21 @@
 // src/components/layout/Header/ThemeToggle.tsx
+import { memo, useCallback } from "react"
 import { motion } from "framer-motion"
 import { Sun, Moon } from "lucide-react"
 import { useTheme } from "@/components/theme-provider"
 
-export function ThemeToggle() {
+export const ThemeToggle = memo(function ThemeToggle() {
   const { theme, setTheme } = useTheme()
 
-  // Handle the toggle
-  const handleToggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Toggle between light and dark directly instead of checking current theme
-    if (theme === 'system') {
-      // If system, first set to light
-      setTheme('light');
-    } else if (theme === 'light') {
-      setTheme('dark');
-    } else {
-      setTheme('light');
-    }
-  };
+  const handleToggle = useCallback((e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setTheme(theme === 'system' ? 'light' : theme === 'light' ? 'dark' : 'light')
+  }, [theme, setTheme])
 
-  // Get the effective theme (what's actually being applied)
   const effectiveTheme = theme === 'system' 
     ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    : theme;
+    : theme
 
   return (
     <motion.button
@@ -40,18 +31,19 @@ export function ThemeToggle() {
         hover:bg-opacity-90 transition-all duration-200
       `}
       aria-label={`Switch to ${effectiveTheme === 'dark' ? 'light' : 'dark'} mode`}
+      aria-pressed={effectiveTheme === 'dark'}
     >
       {effectiveTheme === 'dark' ? (
         <>
-          <Sun className="h-4 w-4" />
+          <Sun className="h-4 w-4" aria-hidden="true" />
           <span className="sr-only sm:not-sr-only">Light mode</span>
         </>
       ) : (
         <>
-          <Moon className="h-4 w-4" />
+          <Moon className="h-4 w-4" aria-hidden="true" />
           <span className="sr-only sm:not-sr-only">Dark mode</span>
         </>
       )}
     </motion.button>
   )
-}
+})

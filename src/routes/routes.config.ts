@@ -8,7 +8,7 @@ interface RouteConfig {
 }
 
 // Lazy load all page components
-// const HomePage = lazy(() => import('@/pages/HomePage'));
+const HomePage = lazy(() => import('@/pages/HomePage'));
 // const InvestorPage = lazy(() => import('@/pages/InvestorPage'));
 // const StartupPage = lazy(() => import('@/pages/StartupPage'));
 // const SyndicatePage = lazy(() => import('@/pages/SyndicatePage'));
@@ -35,10 +35,10 @@ interface RouteConfig {
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 export const routes: RouteConfig[] = [
-  // {
-  //   path: '/',
-  //   component: HomePage,
-  // },
+  {
+    path: '/',
+    component: HomePage,
+  },
   // {
   //   path: '/investor',
   //   component: InvestorPage,

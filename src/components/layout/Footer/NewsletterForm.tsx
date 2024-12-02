@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Send } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export function NewsletterForm() {
   const [email, setEmail] = useState('')
@@ -20,28 +21,47 @@ export function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6">
-      <div className="flex max-w-md gap-x-4">
-        <label htmlFor="email-address" className="sr-only">
-          Email address
-        </label>
-        <input
-          id="email-address"
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="min-w-0 flex-auto rounded-lg border-0 bg-white/5 px-3.5 py-2 text-gray-600 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-primary dark:text-gray-300 sm:text-sm sm:leading-6"
-          placeholder="Enter your email"
-        />
+    <form onSubmit={handleSubmit} className="w-full max-w-md">
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex-1">
+          <label htmlFor="email-address" className="sr-only">
+            Email address
+          </label>
+          <input
+            id="email-address"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={cn(
+              "w-full rounded-lg",
+              "px-3.5 py-2.5",
+              "text-gray-600 dark:text-gray-300",
+              "bg-white dark:bg-gray-800",
+              "border border-gray-300 dark:border-gray-700",
+              "focus:ring-2 focus:ring-primary focus:border-transparent",
+              "placeholder:text-gray-500 dark:placeholder:text-gray-400",
+              "transition-colors"
+            )}
+            placeholder="Enter your email"
+          />
+        </div>
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           type="submit"
           disabled={status === 'loading'}
-          className="flex items-center gap-2 rounded-lg bg-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50"
+          className={cn(
+            "inline-flex items-center justify-center gap-2",
+            "rounded-lg bg-primary px-4 py-2.5",
+            "text-sm font-semibold text-white",
+            "hover:bg-primary/90",
+            "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+            "disabled:opacity-50 disabled:cursor-not-allowed",
+            "transition-colors"
+          )}
         >
           {status === 'loading' ? (
             'Subscribing...'
@@ -49,7 +69,7 @@ export function NewsletterForm() {
             'Subscribed!'
           ) : (
             <>
-              Subscribe <Send className="h-4 w-4" />
+              Subscribe <Send className="h-4 w-4" aria-hidden="true" />
             </>
           )}
         </motion.button>
