@@ -3,6 +3,7 @@ import { ArrowRight, TrendingUp, LineChart, ChevronRight, Users, Target } from '
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { SlidingTiles } from './SlidingTiles';
+import { ResponsiveContainer } from '@/components/layout/ResponsiveContainer';
 
 export function HeroSection() {
   const stats = [
@@ -38,10 +39,10 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-grid-slate-200/50 dark:bg-grid-slate-800/50" />
 
       {/* Main Content */}
-      <div className="relative container mx-auto px-4 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <ResponsiveContainer className="relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Column */}
-          <div className="space-y-10">
+          <div className="space-y-8">
             {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -123,7 +124,7 @@ export function HeroSection() {
               transition={{ delay: 0.5 }}
               className="grid grid-cols-2 gap-4"
             >
-              {stats.map((stat, index) => (
+              {stats.map((stat) => (
                 <motion.div
                   key={stat.label}
                   className={cn(
@@ -196,7 +197,7 @@ export function HeroSection() {
             <SlidingTiles />
           </motion.div>
         </div>
-      </div>
+      </ResponsiveContainer>
     </section>
   );
 }

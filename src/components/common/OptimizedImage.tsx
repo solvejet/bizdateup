@@ -1,5 +1,5 @@
 // src/components/common/OptimizedImage.tsx
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { ImageOff } from 'lucide-react'
 
@@ -10,7 +10,7 @@ interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> 
   height?: number
 }
 
-export function OptimizedImage({ 
+export const OptimizedImage = memo(function OptimizedImage({ 
   src, 
   alt, 
   width = 48, 
@@ -34,7 +34,6 @@ export function OptimizedImage({
     )
   }
 
-  // Fallback component when image fails to load
   return (
     <div 
       style={{ width, height }}
@@ -47,4 +46,4 @@ export function OptimizedImage({
       <ImageOff className="w-1/2 h-1/2 text-gray-400" />
     </div>
   )
-}
+})

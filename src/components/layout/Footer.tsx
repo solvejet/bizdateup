@@ -1,22 +1,23 @@
-// src/components/layout/Footer.tsx
+// src/components/layout/Footer/Footer.tsx
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { NewsletterForm } from './Footer/NewsletterForm'
-import { SocialLinks } from './Footer/SocialLinks'
-import { ContactInfo } from './Footer/ContactInfo'
-import { OptimizedImage } from '@/components/common/OptimizedImage'
-import { footerNavigation } from './Footer/navigation/constants'
-import { ResponsiveContainer } from '@/components/layout/ResponsiveContainer'
 import { cn } from '@/lib/utils'
 
-const FooterSection = memo(function FooterSection({ 
-  title, 
-  items 
-}: { 
+
+import { ResponsiveContainer } from './ResponsiveContainer'
+import { NewsletterForm } from './Footer/NewsletterForm'
+import { ContactInfo } from './Footer/ContactInfo'
+import { SocialLinks } from './Footer/SocialLinks'
+import { footerNavigation } from './Footer/navigation/constants'
+import { OptimizedImage } from '../common/OptimizedImage'
+
+interface FooterSectionProps {
   title: string
-  items: { name: string; href: string }[] 
-}) {
+  items: { name: string; href: string }[]
+}
+
+const FooterSection = memo(function FooterSection({ title, items }: FooterSectionProps) {
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
@@ -112,7 +113,7 @@ const FooterBottom = memo(function FooterBottom() {
   )
 })
 
-export function Footer() {
+export const Footer = memo(function Footer() {
   return (
     <footer className="bg-gray-50 dark:bg-gray-900">
       <ResponsiveContainer className="pb-8 pt-16 sm:pt-24">
@@ -121,4 +122,4 @@ export function Footer() {
       </ResponsiveContainer>
     </footer>
   )
-}
+})

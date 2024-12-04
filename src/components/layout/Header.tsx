@@ -1,47 +1,61 @@
 // src/components/layout/Header/Header.tsx
-import { useState, useMemo } from 'react'
+import { memo, useState, useMemo, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 import { navigation } from './Header/navigation/constants'
 import { cn } from '@/lib/utils'
 
-// Components
-import { ResponsiveContainer } from '@/components/layout/ResponsiveContainer'
-import { Logo } from './Header/components/Logo'
+// Update Logo import to use common component
+import { Logo } from '@/components/common/Logo'
 import { AuthButtons } from './Header/components/AuthButtons'
 import { NavigationItem } from './Header/NavigationItem'
 import { MegaMenu } from './Header/MegaMenu'
 import { MobileMenu } from './Header/MobileMenu'
 import { ThemeToggle } from './Header/ThemeToggle'
+import { ResponsiveContainer } from './ResponsiveContainer'
 import HamburgerIcon from './Header/HamburgerIcon'
 
-export default function Header() {
+interface HeaderProps {
+  className?: string
+}
+
+const MemoizedNavigationItem = memo(NavigationItem)
+const MemoizedAuthButtons = memo(AuthButtons)
+const MemoizedThemeToggle = memo(ThemeToggle)
+const MemoizedHamburgerIcon = memo(HamburgerIcon)
+
+export const Header = memo(function Header({ className }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const { breakpoint, width } = useBreakpoint()
 
-  const isMobile = width < 640 // sm breakpoint
-  const isTablet = width >= 640 && width < 768 // md breakpoint
-  const isDesktop = width >= 768 && width < 1280 // lg and xl breakpoint
-  const isLargeScreen = width >= 1280 // 2xl and above
+  const isMobile = width < 640
+  const isTablet = width >= 640 && width < 768
+  const isDesktop = width >= 768 && width < 1280
+  const isLargeScreen = width >= 1280
 
   const memoizedNavigation = useMemo(() => {
-    if (isMobile) return navigation.slice(0, 4)
-    return navigation
+    return isMobile ? navigation.slice(0, 4) : navigation
   }, [isMobile])
 
   const headerHeight = useMemo(() => {
-    if (isMobile) return 'h-16' // Increased from h-14
+    if (isMobile) return 'h-16'
     if (isTablet) return 'h-16'
     if (isDesktop) return 'h-20'
     return 'h-24'
   }, [isMobile, isTablet, isDesktop])
 
-  const logoSize = useMemo(() => {
-    if (isMobile) return 'h-8' // Increased from h-6
-    if (isTablet) return 'h-8'
-    return 'h-10'
-  }, [isMobile, isTablet])
+  const handleMobileMenuToggle = useCallback(() => {
+    setMobileMenuOpen(prev => !prev)
+  }, [])
+
+  const handleMenuClose = useCallback(() => {
+    setMobileMenuOpen(false)
+  }, [])
+
+  const handleActiveMenuChange = useCallback((menuName: string | null) => {
+    setActiveMenu(menuName)
+  }, [])
 
   return (
     <header 
@@ -51,38 +65,34 @@ export default function Header() {
         "backdrop-blur supports-[backdrop-filter]:bg-white/60",
         "dark:supports-[backdrop-filter]:bg-gray-900/60",
         "border-b border-gray-200 dark:border-gray-800",
-        headerHeight
+        headerHeight,
+        className
       )}
       role="banner"
     >
       <ResponsiveContainer
         as="nav"
-        className={cn(
-          "flex items-center justify-between",
-          "h-full"
-        )}
+        className="flex items-center justify-between h-full"
         aria-label="Main navigation"
       >
         {/* Logo Section */}
         <div className="flex-shrink-0">
-          <Logo isMobile={isMobile} logoSize={logoSize} />
+          <Logo variant={isMobile ? 'mobile' : 'default'} />
         </div>
 
         {/* Main Navigation */}
-        <nav 
-          className={cn(
-            "hidden md:flex items-center",
-            "mx-8 lg:mx-12 xl:mx-16",
-            "gap-x-6 lg:gap-x-8 xl:gap-x-10",
-            "flex-1 justify-center"
-          )}
-        >
+        <nav className={cn(
+          "hidden md:flex items-center",
+          "mx-8 lg:mx-12 xl:mx-16",
+          "gap-x-6 lg:gap-x-8 xl:gap-x-10",
+          "flex-1 justify-center"
+        )}>
           {memoizedNavigation.map((item) => (
-            <NavigationItem
+            <MemoizedNavigationItem
               key={item.name}
               item={item}
               activeMenu={activeMenu}
-              setActiveMenu={setActiveMenu}
+              setActiveMenu={handleActiveMenuChange}
               size={isLargeScreen ? 'large' : 'default'}
             />
           ))}
@@ -90,21 +100,19 @@ export default function Header() {
 
         {/* Right Section */}
         <div className="flex items-center gap-4">
-          <ThemeToggle size={isLargeScreen ? 'large' : 'default'} />
+          <MemoizedThemeToggle />
           
-          {/* Auth Buttons - Only shown on non-mobile */}
           {!isMobile && (
             <>
               <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-              <AuthButtons size={isLargeScreen ? 'large' : 'default'} />
+              <MemoizedAuthButtons size={isLargeScreen ? 'large' : 'default'} />
             </>
           )}
           
-          {/* Hamburger - Only shown on mobile */}
           {isMobile && (
-            <HamburgerIcon 
+            <MemoizedHamburgerIcon 
               isOpen={mobileMenuOpen} 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+              onClick={handleMobileMenuToggle}
             />
           )}
         </div>
@@ -116,7 +124,7 @@ export default function Header() {
           <MegaMenu
             activeMenu={activeMenu}
             items={memoizedNavigation}
-            onMouseLeave={() => setActiveMenu(null)}
+            onMouseLeave={() => handleActiveMenuChange(null)}
           />
         )}
       </AnimatePresence>
@@ -127,10 +135,10 @@ export default function Header() {
           <MobileMenu
             items={memoizedNavigation}
             isOpen={mobileMenuOpen}
-            onClose={() => setMobileMenuOpen(false)}
+            onClose={handleMenuClose}
           />
         )}
       </AnimatePresence>
     </header>
   )
-}
+})

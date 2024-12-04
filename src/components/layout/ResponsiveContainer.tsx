@@ -1,4 +1,3 @@
-// src/components/layout/ResponsiveContainer.tsx
 import { type ElementType } from 'react'
 import { cn } from '@/lib/utils'
 
@@ -21,8 +20,8 @@ export function ResponsiveContainer<T extends ElementType = 'div'>({
       className={cn(
         // Base styles
         "w-full mx-auto",
-        // Responsive padding
-        "px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12",
+        // Increased responsive padding
+        "px-6 sm:px-8 md:px-12 lg:px-24 xl:px-32 2xl:px-40",
         // Container constraints
         "max-w-[320px] xs:max-w-none",
         "sm:max-w-[640px]",

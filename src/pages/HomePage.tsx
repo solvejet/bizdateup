@@ -3,10 +3,33 @@ import { Suspense, lazy } from 'react'
 import { motion } from 'framer-motion'
 import { Skeleton } from '@/components/LoadingSkeleton'
 
-// Lazy load hero section for better initial load performance
 const HeroSection = lazy(() => 
   import('@/components/home/HeroSection').then(mod => ({ 
     default: mod.HeroSection 
+  }))
+)
+
+const FundedStartupsSection = lazy(() => 
+  import('@/components/home/FundedStartups').then(mod => ({ 
+    default: mod.FundedStartupsSection 
+  }))
+)
+
+const InvestmentGrowthSection = lazy(() => 
+  import('@/components/home/InvestmentGrowth').then(mod => ({ 
+    default: mod.InvestmentGrowthSection 
+  }))
+)
+
+const InvestorsSection = lazy(() => 
+  import('@/components/home/InvestorsSection').then(mod => ({ 
+    default: mod.InvestorsSection 
+  }))
+)
+
+const WhyInvestSection = lazy(() => 
+  import('@/components/home/WhyInvest').then(mod => ({ 
+    default: mod.WhyInvestSection 
   }))
 )
 
@@ -17,7 +40,6 @@ export default function HomePage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {/* Hero Section */}
       <Suspense 
         fallback={
           <div className="min-h-screen flex items-center justify-center">
@@ -28,7 +50,54 @@ export default function HomePage() {
         <HeroSection />
       </Suspense>
 
-      {/* Other sections will be added here */}
+      <Suspense
+        fallback={
+          <div className="py-20">
+            <div className="max-w-6xl mx-auto px-4">
+              <Skeleton className="h-[40vh]" />
+            </div>
+          </div>
+        }
+      >
+        <FundedStartupsSection />
+      </Suspense>
+
+      <Suspense
+        fallback={
+          <div className="py-20">
+            <div className="max-w-6xl mx-auto px-4">
+              <Skeleton className="h-[40vh]" />
+            </div>
+          </div>
+        }
+      >
+        <InvestorsSection />
+      </Suspense>
+
+      <Suspense
+        fallback={
+          <div className="py-20">
+            <div className="max-w-6xl mx-auto px-4">
+              <Skeleton className="h-[40vh]" />
+            </div>
+          </div>
+        }
+      >
+        <InvestmentGrowthSection />
+      </Suspense>
+
+      <Suspense
+        fallback={
+          <div className="py-20">
+            <div className="max-w-6xl mx-auto px-4">
+              <Skeleton className="h-[40vh]" />
+            </div>
+          </div>
+        }
+      >
+        <WhyInvestSection />
+      </Suspense>
+      
     </motion.div>
   )
 }
