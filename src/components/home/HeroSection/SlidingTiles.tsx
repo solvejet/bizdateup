@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react'
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useBreakpoint } from '@/hooks/useBreakpoint'
 import { StartupCard } from './cards/StartupCard'
 import { InvestorCard } from './cards/InvestorCard'
@@ -22,7 +22,6 @@ function ScrollColumn<T>({
   className 
 }: ScrollColumnProps<T>) {
   const columnRef = useRef<HTMLDivElement>(null)
-  const [containerHeight, setContainerHeight] = useState(0)
   const [contentHeight, setContentHeight] = useState(0)
   const [scrollY, setScrollY] = useState(0)
 
@@ -37,7 +36,6 @@ function ScrollColumn<T>({
     
     if (!content) return
 
-    setContainerHeight(container.offsetHeight)
     setContentHeight(content.offsetHeight / 4) // Divide by 4 since we quadrupled the items
   }, [])
 
@@ -107,10 +105,10 @@ export function SlidingTiles() {
   ), [])
 
   const combinedData = useMemo(() => 
-    startupData.flatMap((startup, index) => [
+    startupData.map((startup, index) => [
       { type: 'startup' as const, data: startup },
-      { type: 'investor' as const, data: investorData[index] }
-    ])
+      { type: 'investor' as const, data: investorData[index]! }
+    ]).flat()
   , [])
 
   // Add CSS to hide scrollbar

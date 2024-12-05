@@ -1,6 +1,6 @@
 // src/components/home/InvestmentGrowth/SuccessCalculator.tsx
 import { useState, useMemo } from 'react';
-import { Calculator, TrendingUp, IndianRupee, Calendar } from 'lucide-react';
+import { Calculator, IndianRupee, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 

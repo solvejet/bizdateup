@@ -12,19 +12,18 @@ export const InvestmentGrowthSection = memo(function InvestmentGrowthSection() {
       <ResponsiveContainer className="space-y-16">
         {/* Header */}
         <div className="text-center space-y-6">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className={cn(
-              "text-4xl md:text-5xl font-bold",
-              "bg-gradient-to-r from-primary via-primary/80 to-primary",
-              "bg-clip-text text-transparent",
-              "pb-2"
-            )}
-          >
-            Growing Your ₹10 Lakhs to ₹10 Crores
-          </motion.h2>
+        <motion.h2
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  className={cn(
+    "text-4xl md:text-5xl font-bold",
+    "text-gray-900 dark:text-white/90",
+    "pb-2"
+  )}
+>
+  Growing Your ₹10 Lakhs to ₹10 Crores
+</motion.h2>
           
           <motion.p
             initial={{ opacity: 0, y: 20 }}

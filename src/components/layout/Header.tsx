@@ -27,7 +27,7 @@ const MemoizedHamburgerIcon = memo(HamburgerIcon)
 export const Header = memo(function Header({ className }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
-  const { breakpoint, width } = useBreakpoint()
+  const { width } = useBreakpoint()
 
   const isMobile = width < 640
   const isTablet = width >= 640 && width < 768

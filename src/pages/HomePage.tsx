@@ -33,6 +33,20 @@ const WhyInvestSection = lazy(() =>
   }))
 )
 
+const HowItWorksSection = lazy(() => 
+  import('@/components/home/HowItWorksSection')
+)
+
+const SuccessStoriesSection = lazy(() => 
+  import('@/components/home/SuccessStories')
+)
+
+const FAQSection = lazy(() => 
+  import('@/components/home/FAQ').then(mod => ({ 
+    default: mod.default 
+  }))
+)
+
 export default function HomePage() {
   return (
     <motion.div
@@ -97,6 +111,42 @@ export default function HomePage() {
       >
         <WhyInvestSection />
       </Suspense>
+
+      <Suspense
+        fallback={
+          <div className="py-20">
+            <div className="max-w-6xl mx-auto px-4">
+              <Skeleton className="h-[40vh]" />
+            </div>
+          </div>
+        }
+      >
+        <HowItWorksSection />
+      </Suspense>
+
+      <Suspense
+        fallback={
+          <div className="py-20">
+            <div className="max-w-6xl mx-auto px-4">
+              <Skeleton className="h-[40vh]" />
+            </div>
+          </div>
+        }
+      >
+        <SuccessStoriesSection  />
+      </Suspense>
+
+      <Suspense
+  fallback={
+    <div className="py-20">
+      <div className="max-w-6xl mx-auto px-4">
+        <Skeleton className="h-[40vh]" />
+      </div>
+    </div>
+  }
+>
+  <FAQSection />
+</Suspense>
       
     </motion.div>
   )

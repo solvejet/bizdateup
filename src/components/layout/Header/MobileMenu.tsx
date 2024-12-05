@@ -12,7 +12,6 @@ import {
   UserCircle,
   Settings,
   HelpCircle,
-  Menu,
   LogIn,
   UserPlus
 } from 'lucide-react'

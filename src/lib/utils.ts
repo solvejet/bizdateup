@@ -1,10 +1,10 @@
 // src/lib/utils.ts
-import { type ClassNameValue, twMerge } from "tailwind-merge"
-import { clsx, type ClassValue } from "clsx"
+import { type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+import { clsx } from "clsx"
 
 /**
  * Merges multiple class names using clsx and tailwind-merge
- * More powerful version of the original cn function
  */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -73,7 +73,7 @@ export function formatClassNames(
   return cn(
     baseClasses,
     Object.entries(conditionalClasses)
-      .filter(([_, condition]) => condition)
+      .filter(([, condition]) => condition)
       .map(([className]) => className)
       .join(' ')
   )
@@ -152,4 +152,100 @@ export function getColorVariant(
   scheme: ColorScheme
 ): string {
   return colorVariants[variant][scheme]
+}
+
+/**
+ * Format number as currency
+ */
+export function formatCurrency(value: number, currency = 'INR'): string {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency,
+    maximumFractionDigits: 0,
+  }).format(value)
+}
+
+/**
+ * Format number with abbreviated suffix (K, M, B)
+ */
+export function formatNumber(value: number): string {
+  if (value >= 1e9) {
+    return `${(value / 1e9).toFixed(1)}B`
+  }
+  if (value >= 1e6) {
+    return `${(value / 1e6).toFixed(1)}M`
+  }
+  if (value >= 1e3) {
+    return `${(value / 1e3).toFixed(1)}K`
+  }
+  return value.toString()
+}
+
+/**
+ * Format date relative to now
+ */
+export function formatRelativeDate(date: Date | string): string {
+  const now = new Date()
+  const targetDate = typeof date === 'string' ? new Date(date) : date
+  const diffInSeconds = Math.floor((now.getTime() - targetDate.getTime()) / 1000)
+
+  if (diffInSeconds < 60) return 'just now'
+  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`
+  if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`
+  if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`
+  if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 604800)}w ago`
+  
+  return targetDate.toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })
+}
+
+/**
+ * Debounce function with proper typing
+ */
+export function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(
+  func: T,
+  wait: number
+): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout
+
+  return function executedFunction(...args: Parameters<T>) {
+    const later = () => {
+      clearTimeout(timeout)
+      func(...args)
+    }
+
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+  }
+}
+
+/**
+ * Throttle function with proper typing
+ */
+export function throttle<T extends (...args: Parameters<T>) => ReturnType<T>>(
+  func: T,
+  limit: number
+): (...args: Parameters<T>) => void {
+  let inThrottle = false
+  let lastFunc: NodeJS.Timeout
+  let lastRan: number
+
+  return function executedFunction(...args: Parameters<T>) {
+    if (!inThrottle) {
+      func(...args)
+      lastRan = Date.now()
+      inThrottle = true
+    } else {
+      clearTimeout(lastFunc)
+      lastFunc = setTimeout(() => {
+        if (Date.now() - lastRan >= limit) {
+          func(...args)
+          lastRan = Date.now()
+        }
+      }, Math.max(limit - (Date.now() - lastRan), 0))
+    }
+  }
 }

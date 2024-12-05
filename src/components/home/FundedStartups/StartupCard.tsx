@@ -1,7 +1,7 @@
 // src/components/home/FundedStartups/StartupCard.tsx
 import { memo } from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, Building2, ArrowUpRight } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { FundedStartup } from './data';
 

@@ -36,7 +36,7 @@ const FeatureCard = memo(function FeatureCard({
       {/* Background Gradient Overlay */}
       <div className={cn(
         "absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100",
-        "bg-gradient-to-br from-primary/5 via-transparent to-transparent",
+        "bg-gradient-to-br from-primary/5 via-transparent to-transparent dark:from-primary/10",
         "transition-opacity duration-500"
       )} />
 
@@ -45,7 +45,8 @@ const FeatureCard = memo(function FeatureCard({
         {/* Icon */}
         <div className={cn(
           "w-14 h-14 rounded-xl",
-          "bg-primary/10 text-primary",
+          "bg-primary/10 dark:bg-primary/20",
+          "text-primary dark:text-white",
           "flex items-center justify-center",
           "group-hover:scale-110 group-hover:bg-primary group-hover:text-white",
           "transition-all duration-300"
@@ -96,7 +97,13 @@ export const WhyInvestSection = memo(function WhyInvestSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium"
+              className={cn(
+                "inline-block px-4 py-1.5 rounded-full",
+                "bg-primary/10 dark:bg-primary/20",
+                "text-primary dark:text-primary-foreground",
+                "text-sm font-medium",
+                "border border-primary/10 dark:border-primary/20"
+              )}
             >
               Support founders, build your portfolio
             </motion.span>
@@ -108,8 +115,7 @@ export const WhyInvestSection = memo(function WhyInvestSection() {
               className={cn(
                 "text-4xl md:text-5xl lg:text-6xl",
                 "font-bold tracking-tight",
-                "bg-gradient-to-r from-primary via-primary/80 to-primary",
-                "bg-clip-text text-transparent",
+                "text-gray-900 dark:text-white/90",
                 "pb-2"
               )}
             >

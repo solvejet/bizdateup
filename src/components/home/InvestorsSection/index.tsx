@@ -105,7 +105,13 @@ export function InvestorsSection() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium"
+                className={cn(
+                  "inline-block px-4 py-1.5 rounded-full",
+                  "bg-primary/10 dark:bg-primary/20",
+                  "text-primary dark:text-primary-foreground",
+                  "text-sm font-medium",
+                  "border border-primary/10 dark:border-primary/20"
+                )}
               >
                 Growing Community
               </motion.span>
@@ -116,7 +122,7 @@ export function InvestorsSection() {
                 className={cn(
                   "text-4xl md:text-5xl lg:text-6xl",
                   "font-bold tracking-tight",
-                  "bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent",
+                  "text-gray-900 dark:text-white/90",
                   "pb-2"
                 )}
               >
@@ -154,7 +160,7 @@ export function InvestorsSection() {
                     </div>
                   </div>
                   <div className="pt-4 space-y-2">
-                    <span className="block text-4xl lg:text-5xl font-bold text-primary">
+                    <span className="block text-4xl lg:text-5xl font-bold text-primary dark:text-primary-foreground">
                       {stat.value}
                     </span>
                     <span className="text-lg font-semibold text-gray-900 dark:text-white">
